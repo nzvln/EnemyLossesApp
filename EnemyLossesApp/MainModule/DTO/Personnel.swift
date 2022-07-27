@@ -7,12 +7,14 @@
 
 import Foundation
 
-struct Personnel: Codable {
+struct Personnel: Decodable {
     var date: String
     var day: Int
     var personnel: Int
+    var pow: Int?
     
     enum CodingKeys: String, CodingKey {
         case date, day, personnel
+        case pow = "POW"
     }
 }

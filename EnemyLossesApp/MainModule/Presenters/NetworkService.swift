@@ -20,38 +20,37 @@ final class NetworkService {
         
         guard let url = URL(string: UrlOfData.urlPersonnel) else {return}
         
-        URLSession.shared.dataTask(with: url) { (data, responce, error) in
-            if let error = error {
-                completion(.failure(error))
+        let task = URLSession.shared.dataTask(with: url) {
+            data, response, error in
+            if let data = data, let string = String(data: data, encoding: .utf8) {
+                let data = string.replacingOccurrences(of: "NaN", with: "null").data(using: .utf8)!
+                do {
+                    let obj = try JSONDecoder().decode([Personnel].self, from: data)
+                    completion(.success(obj))
+                } catch {
+                    completion(.failure(error))
+                }
             }
-            
-            do {
-                let obj = try JSONDecoder().decode([Personnel].self, from: data!)
-                completion(.success(obj))
-            } catch{
-                completion(.failure(error))
-            }
-            
-        }.resume()
+        }
+        task.resume()
     }
     
     func getEquipment(_ completion: @escaping (Result<[Equipment]?, Error>) -> Void) {
         
         guard let url = URL(string: UrlOfData.urlEquipment) else {return}
         
-        URLSession.shared.dataTask(with: url) { (data, responce, error) in
-            if let error = error {
-                completion(.failure(error))
+        let task = URLSession.shared.dataTask(with: url) {
+            data, response, error in
+            if let data = data, let string = String(data: data, encoding: .utf8) {
+                let data = string.replacingOccurrences(of: "NaN", with: "null").data(using: .utf8)!
+                do {
+                    let obj = try JSONDecoder().decode([Equipment].self, from: data)
+                    completion(.success(obj))
+                } catch {
+                    completion(.failure(error))
+                }
             }
-            do {
-                let obj = try JSONDecoder().decode([Equipment].self, from: data!)
-                completion(.success(obj))
-            } catch{
-                completion(.failure(error))
-            }
-            
-        }.resume()
+        }
+        task.resume()
     }
 }
-
-

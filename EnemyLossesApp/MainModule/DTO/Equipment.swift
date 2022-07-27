@@ -25,7 +25,6 @@ struct Equipment: Decodable {
     var mobileSRBMSystem: Int?
     var vehiclesAndFuelTanks: Int?
     var cruiseMissiles: Int?
-
     
     enum CodingKeys: String, CodingKey {
         case date, day, aircraft, helicopter, tank, drone
@@ -43,24 +42,16 @@ struct Equipment: Decodable {
     }
 }
 
-enum QuantumValue: Decodable {
-     
-     case int(Int), string(String)
-     
-     init(from decoder: Decoder) throws {
-         if let int = try? decoder.singleValueContainer().decode(Int.self) {
-             self = .int(int)
-             return
-         }
-         if let string = try? decoder.singleValueContainer().decode(String.self) {
-             self = .string(string)
-             return
-         }
-         throw QuantumError.missingValue
-     }
-     
-     enum QuantumError: Error {
-         case missingValue
-     }
- }
-
+struct QuantumValue: Decodable {
+    
+    var value: Any?
+    
+    init(from decoder: Decoder) {
+        if let value = try? decoder.singleValueContainer().decode(Int.self) {
+            self.value = value
+        }
+        if let value = try? decoder.singleValueContainer().decode(String.self) {
+            self.value = value
+        }
+    }
+}

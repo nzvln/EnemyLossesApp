@@ -24,7 +24,7 @@ var state: ListVCState?
 final class MainViewController: UIViewController {
     
     private var collectionView: UICollectionView!
-    private var presenter: MainPresenter?
+    var presenter: MainPresenter?
     
     lazy var titlelabel: UILabel = {
         let label = UILabel()
@@ -150,9 +150,24 @@ extension MainViewController: UICollectionViewDataSource {
 extension MainViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) { [self] in
-            navigationController?.pushViewController(DetailViewController(), animated: true)
+        let detailVC = DetailViewController()
+    
+        switch state {
+        case .personnel:
+            guard let personnel = self.presenter?.personnelData()[indexPath.row] else { return }
+            detailVC.personnels = personnel
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
+                navigationController?.pushViewController(detailVC, animated: true)
+            }
+        case .equipment:
+            guard let equipment = self.presenter?.equipmentData()[indexPath.row] else { return }
+            detailVC.equipments = equipment
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
+                navigationController?.pushViewController(detailVC, animated: true)
+            }
+
+        default:
+            break
         }
     }
 }
