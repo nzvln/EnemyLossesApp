@@ -244,7 +244,7 @@ class DetailViewController: UIViewController {
     
     func amountOfNavalShipsLabelConstraints() {
         NSLayoutConstraint.activate([
-            NSLayoutConstraint(item: amountOfNavalShipsLabel, attribute: .top, relatedBy: .equal, toItem: amountOfDronesLabel, attribute: .bottom, multiplier: 1, constant: ConstraintsOfView.firstLabelTop),
+            NSLayoutConstraint(item: amountOfNavalShipsLabel, attribute: .top, relatedBy: .equal, toItem: amountOfDronesLabel, attribute: .bottom, multiplier: 1, constant: ConstraintsOfView.labelTop),
             NSLayoutConstraint(item: amountOfNavalShipsLabel, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: ConstraintsOfView.centerX),
             NSLayoutConstraint(item: amountOfNavalShipsLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: ConstraintsOfView.labelHeight),
             NSLayoutConstraint(item: amountOfNavalShipsLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: ConstraintsOfView.labelWidth)])
